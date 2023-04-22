@@ -28,14 +28,10 @@ func (cs *ClientService) SpyLogin(ctx context.Context, req *v1.SpyLoginRequest) 
 
 	reply = &v1.SpyLoginReply{}
 
-	if e := cs.usecase.SaveSpyLogin(ctx); e != nil {
-		reply.Code = 1
-		reply.Message = e.Error()
+	if e := cs.usecase.SaveSpyLogin(ctx, req.Name, req.Password); e != nil {
+		return reply, e
 	}
 
-	return &v1.SpyLoginReply{
-		Code:    0,
-		Message: "",
-	}, v1.ErrorSaveSpyLoginFailed("保存错误!")
+	return reply, nil
 
 }

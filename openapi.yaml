@@ -118,12 +118,7 @@ components:
             description: 管理员登陆的请求
         api.honeypot.v1.SpyLoginReply:
             type: object
-            properties:
-                code:
-                    type: integer
-                    format: int64
-                message:
-                    type: string
+            properties: {}
             description: 尝试登陆的响应
         api.honeypot.v1.SpyLoginRequest:
             type: object

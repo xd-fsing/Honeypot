@@ -7,25 +7,28 @@ package sqlc
 
 import (
 	"context"
+	"encoding/json"
 )
 
 const saveLoginSpy = `-- name: SaveLoginSpy :one
-INSERT INTO spys (ip, kind)
-VALUES ($1, $2)
-RETURNING id, ip, kind, created_at
+INSERT INTO spys (kind, ip, request)
+VALUES ($1, $2, $3)
+RETURNING id, ip, request, kind, created_at
 `
 
 type SaveLoginSpyParams struct {
-	Ip   string
-	Kind int16
+	Kind    int16
+	Ip      string
+	Request json.RawMessage
 }
 
 func (q *Queries) SaveLoginSpy(ctx context.Context, arg SaveLoginSpyParams) (Spy, error) {
-	row := q.db.QueryRowContext(ctx, saveLoginSpy, arg.Ip, arg.Kind)
+	row := q.db.QueryRowContext(ctx, saveLoginSpy, arg.Kind, arg.Ip, arg.Request)
 	var i Spy
 	err := row.Scan(
 		&i.ID,
 		&i.Ip,
+		&i.Request,
 		&i.Kind,
 		&i.CreatedAt,
 	)
@@ -33,7 +36,10 @@ func (q *Queries) SaveLoginSpy(ctx context.Context, arg SaveLoginSpyParams) (Spy
 }
 
 const testSql = `-- name: TestSql :many
-SELECT FROM spys as s,users AS u where s.created_by = u.id
+SELECT
+FROM spys as s,
+     users AS u
+where s.created_by = u.id
 `
 
 type TestSqlRow struct {

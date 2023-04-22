@@ -5,12 +5,14 @@
 package sqlc
 
 import (
+	"encoding/json"
 	"time"
 )
 
 type Spy struct {
 	ID        int64
 	Ip        string
+	Request   json.RawMessage
 	Kind      int16
 	CreatedAt time.Time
 }

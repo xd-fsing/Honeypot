@@ -20,7 +20,7 @@ type AdminUseCase struct {
 	log  *log.Helper
 }
 
-func NewAdminUsecase(repo AdminRepo, logger log.Logger) *AdminUseCase {
+func NewAdminUseCase(repo AdminRepo, logger log.Logger) *AdminUseCase {
 	return &AdminUseCase{
 		repo: repo,
 		log:  log.NewHelper(log.With(logger, "module", "usecase/admin")),

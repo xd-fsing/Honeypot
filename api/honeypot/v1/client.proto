@@ -28,7 +28,4 @@ message SpyLoginRequest {
 }
 
 //尝试登陆的响应
-message SpyLoginReply {
-  int64 code = 1;
-  string message = 2;
-}
+message SpyLoginReply {}
