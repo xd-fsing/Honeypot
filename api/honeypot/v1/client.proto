@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package api.honeypot.v1;
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "honeypot/api/honeypot/v1;v1";
+
+
+service Client {
+  //记录用户尝试通过对话框登陆的攻击
+  rpc SpyLogin (SpyLoginRequest) returns (SpyLoginReply){
+    option(google.api.http) = {
+      post:"/login",
+      body:"*"
+    };
+  };
+
+  //记录数据库尝试登陆记录
+
+  //记录。。。。后面逐项添加
+}
+
+//尝试登陆的请求,带有参数校验
+message SpyLoginRequest {
+  string name = 1 [(validate.rules).string = {min_len:3,max_len:10}];
+  string password = 2 [(validate.rules).string = {min_len:8,max_len:16}];
+}
+
+//尝试登陆的响应
+message SpyLoginReply {
+  int64 code = 1;
+  string message = 2;
+}

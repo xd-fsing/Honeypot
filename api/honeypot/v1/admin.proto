@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package api.honeypot.v1;
+import "google/api/annotations.proto";
+
+option go_package = "honeypot/api/honeypot/v1;v1";
+
+
+service Admin {
+
+	//后台登陆
+	rpc Login (LoginRequest) returns (LoginReply){
+		option(google.api.http) = {
+			post:"/admin/login",
+			body:"*"
+		};
+	};
+
+	//查询spy记录
+	rpc ListSpy (ListSpyRequest) returns (ListSpyReply){
+		option(google.api.http) = {
+			post:"/admin/list",
+			body:"*"
+		};
+	};
+}
+
+//数据库迁移的请求
+message MigrateRequest{}
+//数据库迁移的响应
+message MigrateReply{}
+
+//管理员登陆的请求
+message LoginRequest{
+	string name = 1;
+	string password = 2;
+}
+
+//管理员登陆的响应
+message LoginReply{
+	int64 code = 1;
+	string message = 2;
+}
+
+//查看尝试登陆记录的请求
+message ListSpyRequest{
+	int64 page = 1;
+	string keyword = 2;
+}
+
+//查看尝试登陆记录的请求
+message ListSpyReply{
+	int64 code = 1;
+	string message = 2;
+	message Spy{
+		int64 id = 1;
+		string ip = 2;
+		string name = 3;
+		string password = 4;
+	}
+	repeated Spy data = 3;
+}
+

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package honeypot.v1;
+import "errors/errors.proto";
+
+
+// 多语言特定包名，用于源代码引用
+option go_package = "honeypot/api/honeypot/v1;v1";
+
+
+enum ErrorReason {
+  // 设置缺省错误码
+  option (errors.default_code) = 500;
+
+  SAVE_SPY_LOGIN_FAILED = 0[(errors.code) = 404];
+}
+

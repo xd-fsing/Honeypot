@@ -1,0 +1,17 @@
+server:
+  http:
+    addr: 0.0.0.0:8000
+    timeout: 1s
+  grpc:
+    addr: 0.0.0.0:9000
+    timeout: 1s
+data:
+  database:
+    driver: pgx
+    source: user=postgres password=L6CcD4oIWVutd9vDqZC3d1ppK8zB1UNq host=localhost port=24001 database=honeypot sslmode=disable
+  redis:
+    addr: 127.0.0.1:6379
+    dial_timeout: 1s
+    read_timeout: 0.2s
+    write_timeout: 0.2s
+    password: L6CcD4oIWVutd9vDqZC3d1ppK8zB1UNq

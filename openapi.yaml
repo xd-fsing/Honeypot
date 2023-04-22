@@ -1,0 +1,138 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: ""
+    version: 0.0.1
+paths:
+    /admin/list:
+        post:
+            tags:
+                - Admin
+            description: 查询spy记录
+            operationId: Admin_ListSpy
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.honeypot.v1.ListSpyRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.honeypot.v1.ListSpyReply'
+    /admin/login:
+        post:
+            tags:
+                - Admin
+            description: 后台登陆
+            operationId: Admin_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.honeypot.v1.LoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.honeypot.v1.LoginReply'
+    /login:
+        post:
+            tags:
+                - Client
+            description: 记录用户尝试通过对话框登陆的攻击
+            operationId: Client_SpyLogin
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.honeypot.v1.SpyLoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.honeypot.v1.SpyLoginReply'
+components:
+    schemas:
+        api.honeypot.v1.ListSpyReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int64
+                message:
+                    type: string
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/api.honeypot.v1.ListSpyReply_Spy'
+            description: 查看尝试登陆记录的请求
+        api.honeypot.v1.ListSpyReply_Spy:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                ip:
+                    type: string
+                name:
+                    type: string
+                password:
+                    type: string
+        api.honeypot.v1.ListSpyRequest:
+            type: object
+            properties:
+                page:
+                    type: integer
+                    format: int64
+                keyword:
+                    type: string
+            description: 查看尝试登陆记录的请求
+        api.honeypot.v1.LoginReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int64
+                message:
+                    type: string
+            description: 管理员登陆的响应
+        api.honeypot.v1.LoginRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                password:
+                    type: string
+            description: 管理员登陆的请求
+        api.honeypot.v1.SpyLoginReply:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int64
+                message:
+                    type: string
+            description: 尝试登陆的响应
+        api.honeypot.v1.SpyLoginRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                password:
+                    type: string
+            description: 尝试登陆的请求,带有参数校验
+tags:
+    - name: Admin
+    - name: Client
